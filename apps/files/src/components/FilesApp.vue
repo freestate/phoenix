@@ -63,21 +63,21 @@
       </v-toolbar>
       <v-layout row fill-height>
         <v-flex :class="{'xs12': selectedFiles.length === 0, 'xs6': selectedFiles.length > 0 }" pa-0 fill-height>
-          <dir-table @toggle="toggleFileSelect" @FileAction="openFileActionBar" :fileData="filteredFiles" />
+          <file-list @toggle="toggleFileSelect" @FileAction="openFileActionBar" :fileData="filteredFiles" />
         </v-flex>
         <v-flex v-if="selectedFiles.length > 0" xs6 pa-0>
           <file-details :items="selectedFiles" :starsEnabled="false" :checkboxEnabled="false"/>
         </v-flex>
       </v-layout>
-      <fileactions-tab :sheet="showActionBar" :file="fileAction" @close="showActionBar = !showActionBar"/>
+      <file-actions-tab :sheet="showActionBar" :file="fileAction" @close="showActionBar = !showActionBar"/>
     </v-container>
   </template>
 
 <script>
 import Mixins from '../mixins'
 import FileDetails from './FileDetails.vue'
-import FileactionsTab from './FileactionsTab.vue'
-import DirTable from './DirTable.vue'
+import FileActionsTab from './FileactionsTab.vue'
+import FileList from './FileList.vue'
 import FileUpload from './FileUpload.vue'
 import { filter } from 'lodash'
 import { mapActions, mapGetters, mapState } from 'vuex'
@@ -98,8 +98,8 @@ export default {
   ],
   components: {
     FileDetails,
-    FileactionsTab,
-    DirTable,
+    FileActionsTab,
+    FileList,
     FileUpload
   },
   data () {
