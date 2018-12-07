@@ -33,6 +33,25 @@ export default {
         }
       })
     },
+    downloadFile(file) {
+      const url = this.$client.files.getFileUrl(file.path)
+      let anchor = document.createElement('a')
+
+      let headers = new Headers()
+      headers.append('Authorization', 'Bearer ' + this.getToken)
+
+      fetch(url, { headers })
+        .then(response => response.blob())
+        .then(blobby => {
+          let objectUrl = window.URL.createObjectURL(blobby)
+
+          anchor.href = objectUrl
+          anchor.download = file.name
+          anchor.click()
+
+          window.URL.revokeObjectURL(objectUrl)
+        })
+    },
     label (string) {
       let cssClass = ['uk-label']
 

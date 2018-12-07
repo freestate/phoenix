@@ -50,17 +50,14 @@
         </v-list-tile-content>
 
         <v-list-tile-action>
-          <v-btn icon>
-            <v-icon>edit</v-icon>
-          </v-btn>
-        </v-list-tile-action>
-        <v-list-tile-action>
-          <v-btn icon>
+          <v-btn icon
+            @click="downloadFile(item)">
             <v-icon>file_download</v-icon>
           </v-btn>
         </v-list-tile-action>
         <v-list-tile-action>
-          <v-btn icon>
+          <v-btn icon
+          @click="deleteFile(item)">
             <v-icon>delete</v-icon>
           </v-btn>
         </v-list-tile-action>
@@ -86,23 +83,8 @@ export default {
   ],
   name: 'FileList',
   props: ['fileData', 'starsEnabled', 'checkboxEnabled', 'dateEnabled'],
-  data: () => ({
-    columnsDisabled: {
-      favorite: false,
-      fileSelect: false,
-      data: false
-    },
-    headers: [
-      { text: 'Name', value: 'name' },
-      { text: 'Size', value: 'size' },
-      { text: 'Date', value: 'date' }
-    ],
-    pagination: {
-      sortBy: 'name'
-    }
-  }),
   methods: {
-    ...mapActions('Files', ['markFavorite', 'resetFileSelection', 'addFileSelection', 'removeFileSelection']),
+    ...mapActions('Files', ['markFavorite', 'resetFileSelection', 'addFileSelection', 'removeFileSelection', 'deleteFiles']),
     ...mapActions(['openFile']),
 
     toggleAll () {
@@ -123,30 +105,19 @@ export default {
         file: item
       })
     },
-    disableColumn (column) {
-      if (column === 'stars') {
-        this.columnsDisabled.favorite = this.starsEnabled !== false
-        return this.columnsDisabled.favorite
-      } else if (column === 'checkbox') {
-        this.columnsDisabled.fileSelect = this.checkboxEnabled !== false
-        return this.columnsDisabled.fileSelect
-      }
-      return true
-    },
-    changeSort (column) {
-      if (this.pagination.sortBy === column) {
-        this.pagination.descending = !this.pagination.descending
-      } else {
-        this.pagination.sortBy = column
-        this.pagination.descending = false
-      }
-    },
     openFileActionBar (file) {
       this.$emit('FileAction', file)
+    },
+    deleteFile (file) {
+      this.deleteFiles({
+        client: this.$client,
+        files: [file]
+      })
     }
   },
   computed: {
     ...mapGetters('Files', ['selectedFiles']),
+    ...mapGetters(['getToken']),
     all() {
       return this.selectedFiles.length === this.fileData.length
     }
