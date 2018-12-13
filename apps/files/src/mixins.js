@@ -33,7 +33,7 @@ export default {
         }
       })
     },
-    downloadFile(file) {
+    downloadFile (file) {
       const url = this.$client.files.getFileUrl(file.path)
       let anchor = document.createElement('a')
 

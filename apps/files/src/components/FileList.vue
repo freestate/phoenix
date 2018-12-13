@@ -1,5 +1,5 @@
 <template>
-  <v-list two-line>
+  <v-list two-line id="files-list">
     <v-list-tile>
       <v-list-tile-action>
         <v-checkbox
@@ -118,7 +118,7 @@ export default {
   computed: {
     ...mapGetters('Files', ['selectedFiles']),
     ...mapGetters(['getToken']),
-    all() {
+    all () {
       return this.selectedFiles.length === this.fileData.length
     }
   }
