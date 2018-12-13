@@ -1,5 +1,6 @@
 import filesize from 'filesize'
 import moment from 'moment'
+import fileTypeIconMappings from './fileTypeIconMappings.json'
 
 export default {
   filters: {
@@ -40,7 +41,7 @@ export default {
       let headers = new Headers()
       headers.append('Authorization', 'Bearer ' + this.getToken)
 
-      fetch(url, { headers })
+      fetch(url, {headers})
         .then(response => response.blob())
         .then(blobby => {
           let objectUrl = window.URL.createObjectURL(blobby)
@@ -51,6 +52,13 @@ export default {
 
           window.URL.revokeObjectURL(objectUrl)
         })
+    },
+    fileTypeIcon (fileType) {
+      if (fileType) {
+        const icon = fileTypeIconMappings[fileType]
+        if (icon) return `ocft icon-${icon}`
+      }
+      return 'ocft icon-x-office-document'
     },
     label (string) {
       let cssClass = ['uk-label']

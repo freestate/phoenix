@@ -9,8 +9,8 @@
           @click.native="toggleAll"
         ></v-checkbox>
       </v-list-tile-action>
-      <v-list-tile-action>
-      </v-list-tile-action>
+      <v-list-tile-action></v-list-tile-action>
+      <v-list-tile-avatar></v-list-tile-avatar>
       <v-list-tile-content>
         <v-list-tile-title v-translate>Name</v-list-tile-title>
         <v-list-tile-sub-title class="text--primary" v-translate>Size</v-list-tile-sub-title>
@@ -40,7 +40,9 @@
             color="yellow"
             on-icon="star" off-icon="star_border" large></v-checkbox>
         </v-list-tile-action>
-        <v-list-tile-content
+        <v-list-tile-avatar>
+          <v-icon>{{ fileTypeIcon(item.extension) }}</v-icon>
+        </v-list-tile-avatar>        <v-list-tile-content
           @click="item.extension === false ? navigateTo('files-list', item.path) : openFileActionBar(item)"
           style="cursor: pointer"
         >
